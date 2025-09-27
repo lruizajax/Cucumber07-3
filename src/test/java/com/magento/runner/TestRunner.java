@@ -12,6 +12,7 @@ import org.testng.annotations.Parameters;
                   "html:target/cucumber-reports/cucumber.html",
                   "json:target/cucumber-reports/cucumber.json",
                   "junit:target/cucumber-reports/cucumber.xml",
+                  "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
                   "com.aventstack.chaintest.plugins.ChainTestCucumberListener:"
         },
         monochrome = false,
