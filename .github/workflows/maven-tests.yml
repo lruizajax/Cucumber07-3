@@ -27,7 +27,7 @@ jobs:
       - name: Build and Run Tests
         run: mvn clean test -B
 
-      # 4. Subir los reportes como artefactos descargables
+      # 4. Subir los reportes de Cucumber
       - name: Upload Cucumber HTML Report
         uses: actions/upload-artifact@v4
         with:
@@ -40,10 +40,30 @@ jobs:
           name: surefire-reports
           path: target/surefire-reports
 
-      # 5. Publicar en el summary un link al reporte HTML
-      - name: Publish Cucumber Report to Summary
+      # 5. Subir los resultados de Allure
+      - name: Upload Allure Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: target/allure-results
+
+      # 6. Generar y subir el reporte HTML de Allure
+      - name: Generate Allure Report
+        run: mvn allure:report
+
+      - name: Upload Allure HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-html-report
+          path: target/allure-report
+
+      # 7. Publicar info en el summary
+      - name: Publish Reports to Summary
         run: |
-          echo "### Cucumber Report" >> $GITHUB_STEP_SUMMARY
-          echo "El reporte HTML fue generado en **target/cucumber-reports/index.html**" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Cucumber Report" >> $GITHUB_STEP_SUMMARY
+          echo "Generado en **target/cucumber-reports/index.html**" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Descárgalo desde la sección **Artifacts** al final de esta ejecución." >> $GITHUB_STEP_SUMMARY
+          echo "### 🎯 Allure Report" >> $GITHUB_STEP_SUMMARY
+          echo "Generado en **target/allure-report/index.html**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📥 Descárgalos desde la sección **Artifacts** de esta ejecución." >> $GITHUB_STEP_SUMMARY
