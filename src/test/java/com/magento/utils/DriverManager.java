@@ -25,12 +25,23 @@ public class DriverManager {
     public static WebDriver loadDriver(String browser, String browserVersion, int timeout, boolean headless){
         if (browser.equalsIgnoreCase("chrome")) {
             ChromeOptions options = new ChromeOptions();
+        
             if (browserVersion != null && !browserVersion.isEmpty()) {
                 options.setBrowserVersion(browserVersion);
             }
-            if (headless) options.addArguments("--headless=new");
+        
+            if (headless) {
+                options.addArguments("--headless=new");
+            }
+            
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-gpu"); 
+            options.addArguments("--remote-allow-origins=*");
+            options.addArguments("--user-data-dir=/tmp/chrome-profile-" + System.currentTimeMillis());
+        
             driver.set(new ChromeDriver(options));
-        } else if (browser.equalsIgnoreCase("firefox")) {
+        }else if (browser.equalsIgnoreCase("firefox")) {
             FirefoxOptions options = new FirefoxOptions();
             if (browserVersion != null && !browserVersion.isEmpty()) {
                 options.setBrowserVersion(browserVersion);
