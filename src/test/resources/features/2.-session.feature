@@ -2,9 +2,9 @@
 @sesion
   Característica: iniciar session
 
-    Como  ...
-    Quiero  ...
-    Para ...
+    Como  ...luis
+    Quiero  ... iniciar session
+    Para ... actualizar datos
 
     Esquema del escenario:  iniciar sesion con credenciales validas
       Dado el usuario esta en la pagina de inicio de session "https://magento.softwaretestingboard.com/customer/account/login/"
