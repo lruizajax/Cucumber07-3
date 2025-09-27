@@ -23,20 +23,27 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # 3. Ejecutar Maven (clean test + verify para reportes)
+      # 3. Ejecutar Maven (tests + reportes)
       - name: Build and Run Tests
         run: mvn clean verify -B
 
-      # 4. Publicar los reportes de Cucumber como artefacto
+      # 4. Subir los reportes como artefactos descargables
       - name: Upload Cucumber HTML Report
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-html-report
           path: target/cucumber-reports
 
-      # 5. Publicar los reportes de Surefire (JUnit XML)
       - name: Upload Surefire Reports
         uses: actions/upload-artifact@v4
         with:
           name: surefire-reports
           path: target/surefire-reports
+
+      # 5. Publicar en el summary un link al reporte HTML
+      - name: Publish Cucumber Report to Summary
+        run: |
+          echo "### Cucumber Report" >> $GITHUB_STEP_SUMMARY
+          echo "El reporte HTML fue generado en **target/cucumber-reports/index.html**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Descárgalo desde la sección **Artifacts** al final de esta ejecución." >> $GITHUB_STEP_SUMMARY
