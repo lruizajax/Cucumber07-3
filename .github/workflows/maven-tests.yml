@@ -25,7 +25,7 @@ jobs:
 
       # 3. Ejecutar Maven (tests + reportes)
       - name: Build and Run Tests
-        run: mvn clean verify -B
+        run: mvn clean test -B
 
       # 4. Subir los reportes como artefactos descargables
       - name: Upload Cucumber HTML Report
